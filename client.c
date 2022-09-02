@@ -24,8 +24,7 @@ int main()
 
     char str[50], buffer[1000], temp[100];
 
-    int count = 0, offset = 0;
-    int student_num = 0;
+    int count = 0, offset = 0, student_num = 0;
 
     Teacher teacher;
     int index = 0;

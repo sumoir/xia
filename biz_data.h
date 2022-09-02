@@ -46,7 +46,6 @@ void init_teacher_info(Teacher *teacher, int age, char *name, char *class, char 
 void init_empty_teacher(Teacher *teacher);
 void fini_teacher(Teacher *teacher);
 
-int try_to_parse_student_info(Student *student, int *total_length, char data[]);
 int try_to_parse_info(uint8_t type, void *teacher, int *total_length, char data[]);
 
 Frame encode_body_to_frame(uint8_t type, void *info);

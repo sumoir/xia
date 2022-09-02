@@ -19,19 +19,16 @@ int main()
 
     Student student;
     init_student_info(&student, 19, "sun", "A", "boy");
-
     char buffer[100];
     int index = 0;
 
     Teacher teacher;
     init_empty_teacher(&teacher);
-
     int offset = 0, count = 0;
     int end = 1, teacher_num = 1;
     char temp[100], str[100];
 
     Frame frame;
-
     frame = encode_body_to_frame(STUDENT_TYPE, &student);
     memset(str, 0, sizeof(str));
     index = encode_frame(frame, str);
@@ -48,14 +45,13 @@ int main()
         count = read(clnt_sock, temp, sizeof(temp));
 
         if (count <= 0) {
-            end = 0;
             break;
         }
         else {
             total_length += count;
             memcpy(buffer + offset, temp, count);
         }
-/////////////////////////gaidong//////////////////////
+
         offset = 0;
         while (offset == 0) {
             offset = try_to_parse_info(TEACHER_TYPE, &teacher, &total_length, buffer);
