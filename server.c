@@ -55,10 +55,10 @@ int main()
             total_length += count;
             memcpy(buffer + offset, temp, count);
         }
-
+/////////////////////////gaidong//////////////////////
         offset = 0;
         while (offset == 0) {
-            offset = try_to_parse_teacher_info(&teacher, &total_length, buffer);
+            offset = try_to_parse_info(TEACHER_TYPE, &teacher, &total_length, buffer);
 
             if (offset == 0) {
                 show_teacher(teacher_num++, &teacher);

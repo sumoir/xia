@@ -16,7 +16,7 @@ Frame encode_body_to_frame(uint8_t type, void *info)
 {
     Frame frame;
 
-    frame.header = 0xFA;///
+    frame.header = 0xFA; ///
     switch (type) {
     case STUDENT_TYPE:
         frame.type = type;
@@ -34,9 +34,9 @@ Frame encode_body_to_frame(uint8_t type, void *info)
     return frame;
 }
 
-int decode_body_from_frame(Frame frame, void* info)
+int decode_body_from_frame(Frame frame, void *info)
 {
-    switch (frame.type){
+    switch (frame.type) {
     case STUDENT_TYPE:
         decode_student((Student*)info, frame.data);
         break;
@@ -66,7 +66,7 @@ int try_to_parse_student_info(Student *student, int *total_length, char data[])
         return offset;
     }
 
-    length = buffer[offset + 2] + 3;//
+    length = buffer[offset + 2] + 3; //
     if (*total_length < length) {
         memset((char*)data, 0, 1000);
         memcpy((char*)data, buffer + offset, *total_length);
@@ -87,8 +87,10 @@ int try_to_parse_student_info(Student *student, int *total_length, char data[])
     decode_body_from_frame(frame, (void*)student);
     return 0;
 }
-int try_to_parse_teacher_info(Teacher *teacher, int *total_length, char data[])
+////////////////////////////xiugai////////////////////////
+int try_to_parse_info(uint8_t type, void *info, int *total_length, char data[])
 {
+
     int offset = -1;
     int length = 0;
     char buffer[1000];
@@ -102,7 +104,7 @@ int try_to_parse_teacher_info(Teacher *teacher, int *total_length, char data[])
         return offset;
     }
 
-    length = buffer[offset + 1];//
+    length = buffer[offset + 2] + 3; //
     if (*total_length < length) {
         memset((char*)data, 0, 1000);
         memcpy((char*)data, buffer + offset, *total_length);
@@ -116,12 +118,25 @@ int try_to_parse_teacher_info(Teacher *teacher, int *total_length, char data[])
     memcpy((char*)data, buffer + offset, *total_length);
     *total_length -= offset;
 
-    memset(teacher->name, 0, 100);
-    memset(teacher->class, 0, 100);
-    memset(teacher->sex, 0, 100);
-    memset(teacher->subject, 0, 100); //
+    if (type == STUDENT_TYPE) {
+        Student *student = (Student*)info;
+        memset(student->name, 0, 100);
+        memset(student->class, 0, 100);
+        memset(student->sex, 0, 100); //
+        decode_body_from_frame(frame, (void*)student);
+    }
+    else if (type == TEACHER_TYPE) {
+        Teacher *teacher = (Teacher*)info;
+        memset(teacher->name, 0, 100);
+        memset(teacher->class, 0, 100);
+        memset(teacher->sex, 0, 100);
+        memset(teacher->subject, 0, 100); //
+        decode_body_from_frame(frame, (void*)teacher);
+    }
+    else {
+        printf("Unknown info type.");
+    }
 
-    decode_body_from_frame(frame, (void*)teacher);
     return 0;
 }
 

@@ -52,7 +52,7 @@ int main()
 
         offset = 0;
         while (offset == 0) {
-            offset = try_to_parse_student_info(&student, &total_length, buffer);
+            offset = try_to_parse_info(STUDENT_TYPE, &student, &total_length, buffer);
             if (offset == 0) {
                 student_num++;
                 show_student(student_num, &student);
