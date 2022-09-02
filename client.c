@@ -1,5 +1,5 @@
 /*
- client.c
+ * client.c
  *
  *  Created on: 2022年8月28日
  *      Author: xia
@@ -33,7 +33,7 @@ int main()
 
     Frame frame;
 
-    while (student_num < 30) {
+    while (student_num < 10) {
         memset(temp, 0, sizeof(temp));
         count = read(sock, temp, sizeof(temp));
 
@@ -54,12 +54,13 @@ int main()
         while (offset == 0) {
             offset = try_to_parse_student_info(&student, &total_length, buffer);
             if (offset == 0) {
-                frame = encode_body_to_frame(TEACHER_TYPE, &teacher);
-                memset(str, 0, sizeof(str));
-                index = encode_frame(frame, str);
-
                 student_num++;
                 show_student(student_num, &student);
+
+                memset(str, 0, sizeof(str));
+                frame = encode_body_to_frame(TEACHER_TYPE, &teacher);
+                index = encode_frame(frame, str);
+
                 write(sock, "hello", 5);
                 write(sock, str, index);
                 write(sock, str, index - 3);

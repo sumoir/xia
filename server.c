@@ -21,19 +21,16 @@ int main()
     init_student_info(&student, 19, "sun", "A", "boy");
 
     char buffer[100];
-    char str[100];
-    int count = 0;
     int index = 0;
 
     Teacher teacher;
     init_empty_teacher(&teacher);
 
-    int offset = 0, teacher_num = 1;
-    char temp[100];
-    int end = 1, wait = 0;
+    int offset = 0, count = 0;
+    int end = 1, teacher_num = 1;
+    char temp[100], str[100];
 
     Frame frame;
-//    for (int i = 0; i < 5; i++) {
 
     frame = encode_body_to_frame(STUDENT_TYPE, &student);
     memset(str, 0, sizeof(str));
@@ -42,7 +39,6 @@ int main()
     write(clnt_sock, "hello", 5);
     write(clnt_sock, str, index - 8);
     write(clnt_sock, str + index - 8, index + 8);
-//        write(clnt_sock, buffer, index);
     write(clnt_sock, "hello", 5);
     sleep(1);
 
@@ -66,10 +62,9 @@ int main()
 
             if (offset == 0) {
                 show_teacher(teacher_num++, &teacher);
+
                 memset(buffer, 0, sizeof(buffer));
-
                 frame = encode_body_to_frame(STUDENT_TYPE, &student);
-
                 index = encode_frame(frame, str);
 
                 write(clnt_sock, "hello", 5);
@@ -87,9 +82,9 @@ int main()
         }
 
     }
-//    }
-    close(clnt_sock);
+
     fini_student(&student);
     fini_teacher(&teacher);
+    close(clnt_sock);
     return 0;
 }
