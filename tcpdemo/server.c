@@ -10,8 +10,6 @@
 #include "connect.h"
 #include "codec.h"
 
-int total_length = 0;
-
 int main()
 {
     int clnt_sock = 0;
@@ -25,12 +23,12 @@ int main()
     Teacher teacher;
     init_empty_teacher(&teacher);
     int offset = 0, count = 0;
-    int end = 1, teacher_num = 1;
+    int end = 1, teacher_num = 0;
     char temp[100], str[100];
 
     Frame frame;
+    int total_length = 0;
     frame = encode_body_to_frame(STUDENT_TYPE, &student);
-    memset(str, 0, sizeof(str));
     index = encode_frame(frame, str);
 
     write(clnt_sock, "hello", 5);
@@ -39,8 +37,7 @@ int main()
     write(clnt_sock, "hello", 5);
     sleep(1);
 
-    memset(str, 0, sizeof(str));
-    while (end) {
+    while (teacher_num < 10) {
         memset(temp, 0, sizeof(temp));
         count = read(clnt_sock, temp, sizeof(temp));
 
@@ -52,21 +49,27 @@ int main()
             memcpy(buffer + offset, temp, count);
         }
 
+        if (total_length < 3 + 1 + 1 + 4 + 1 + 1 + 1) {
+            offset = total_length;
+            continue;
+        }
+
         offset = 0;
         while (offset == 0) {
             offset = try_to_parse_info(TEACHER_TYPE, &teacher, &total_length, buffer);
 
             if (offset == 0) {
-                show_teacher(teacher_num++, &teacher);
+                teacher_num++;
+                show_teacher(teacher_num, &teacher);
 
-                memset(buffer, 0, sizeof(buffer));
+                memset(str, 0, sizeof(str));
                 frame = encode_body_to_frame(STUDENT_TYPE, &student);
                 index = encode_frame(frame, str);
 
                 write(clnt_sock, "hello", 5);
-                write(clnt_sock, str, index - 8);
+                write(clnt_sock, str, index);
                 write(clnt_sock, str + index - 8, index + 8);
-                write(clnt_sock, buffer, index);
+                write(clnt_sock, str, index - 8);
                 write(clnt_sock, "hello", 5);
             }
 

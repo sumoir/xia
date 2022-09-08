@@ -12,8 +12,6 @@
 #include "biz_data.h"
 #include "codec.h"
 
-int total_length = 0;
-
 int main()
 {
     int sock = 0;
@@ -31,6 +29,7 @@ int main()
     init_teacher_info(&teacher, 25, "mike", "A", "girl", "English");
 
     Frame frame;
+    int total_length = 0;
 
     while (student_num < 10) {
         memset(temp, 0, sizeof(temp));
@@ -44,10 +43,10 @@ int main()
             memcpy(buffer + offset, temp, count);
         }
 
-        if (total_length < 1 + 1 + 4 + 1 + 1 + 1) {
+        if (total_length < 3 + 1 + 1 + 4 + 1 + 1 + 1) {
             offset = total_length;
             continue;
-        } //
+        }
 
         offset = 0;
         while (offset == 0) {

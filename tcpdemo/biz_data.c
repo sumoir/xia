@@ -44,7 +44,7 @@ int decode_body_from_frame(Frame frame, void *info)
         decode_teacher((Teacher*)info, frame.data);
         break;
     default:
-        printf("Unknown info type.");
+        printf("Unknown info type.decode body from frame\r\n");
         return -1;
     }
 
@@ -62,7 +62,7 @@ int try_to_parse_info(uint8_t type, void *info, int *total_length, char data[])
 
     offset = find_header(*total_length, buffer);
     if (offset < 0) {
-        memset(buffer, 0, *total_length);
+        memset((char*)data, 0, *total_length);
         *total_length = 0;
         return offset;
     }
@@ -86,7 +86,7 @@ int try_to_parse_info(uint8_t type, void *info, int *total_length, char data[])
         memset(student->name, 0, 100);
         memset(student->class, 0, 100);
         memset(student->sex, 0, 100); //
-        decode_body_from_frame(frame, (void*)student);
+        return decode_body_from_frame(frame, (void*)student);
     }
     else if (type == TEACHER_TYPE) {
         Teacher *teacher = (Teacher*)info;
@@ -94,10 +94,12 @@ int try_to_parse_info(uint8_t type, void *info, int *total_length, char data[])
         memset(teacher->class, 0, 100);
         memset(teacher->sex, 0, 100);
         memset(teacher->subject, 0, 100); //
-        decode_body_from_frame(frame, (void*)teacher);
+        return decode_body_from_frame(frame, (void*)teacher);
+
     }
     else {
-        printf("Unknown info type.");
+        printf("Unknown info try type");
+        return -1;
     }
 
     return 0;
