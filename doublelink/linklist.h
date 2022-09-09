@@ -14,17 +14,19 @@ typedef struct node {
     struct node *next;
 } Linklist;
 
-
 int Menu_show();
 
 Linklist* Create_linklist();
-void Add_data_from_head(Linklist *head, int data);
-void Find_data();
-void Delete_data();
-void Change_data();
 void Show_linklist();
 int Length_show(Linklist *head);
+void Add_data_from_head(Linklist *head, int data);
 void Add_data_from_tail(Linklist *head, int data);
-
+void Add_data_from_position(Linklist *head);
+int Find_data_from_position(Linklist *head, int position);
+int Find_position_from_data(Linklist *head, int data);
+void Delete_data_from_position(Linklist *head, int position);
+void Change_data_from_position(Linklist *head, int position, int New_data);
+void Empty_linklist(Linklist *head);
+void Delete_linklist(Linklist *head);
 
 #endif /* LINKLIST_H_ */
