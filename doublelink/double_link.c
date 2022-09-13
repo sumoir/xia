@@ -10,7 +10,7 @@
 #include <stdlib.h>
 
 
-int Menu_show()
+int show_menu()
 {
     int choose = 0;
     printf("\t1.Create linklist\n");
@@ -35,7 +35,7 @@ int Menu_show()
     return choose;
 }
 
-DoubleNode* Create_linklist()
+DoubleNode* create_linklist()
 {
     DoubleNode *head = (DoubleNode*)malloc(sizeof(DoubleNode));
     if (head == NULL) {
@@ -72,8 +72,7 @@ void add_data_from_head(DoubleNode *head, int data)
     return;
 }
 
-
-void Add_data_from_tail(DoubleNode *head, int data)
+void add_data_from_tail(DoubleNode *head, int data)
 {
     int length = 0;
     DoubleNode *list = head;
@@ -95,7 +94,7 @@ void Add_data_from_tail(DoubleNode *head, int data)
     return;
 }
 
-void Add_data_from_position(DoubleNode *head)
+void add_data_with_position(DoubleNode *head)
 {
     int length = 0, pos = 1;
     int data = 0, position = 0;
@@ -123,7 +122,7 @@ void Add_data_from_position(DoubleNode *head)
         return;
     }
     else if (position == length) {
-        Add_data_from_tail(head, data);
+        add_data_from_tail(head, data);
         return;
     }
     else {
@@ -198,7 +197,7 @@ void delete_data_by_position(DoubleNode *head, int target)
     e = NULL;
 }
 
-void Change_data_from_position(DoubleNode *head, int position, int New_data)
+void update_data_from_position(DoubleNode *head, int position, int New_data)
 {
     int length = 0, pos = 0;
     DoubleNode *p = head;
@@ -274,7 +273,7 @@ int find_data_with_position(DoubleNode *head, int position)
     return p->data;
 }
 
-void Empty_linklist(DoubleNode *head)
+void reset_linklist(DoubleNode *head)
 {
 
     while (head->next != NULL) {
@@ -283,12 +282,12 @@ void Empty_linklist(DoubleNode *head)
 
 }
 
-void Delete_linklist(DoubleNode *head)
+void clear_linklist(DoubleNode *head)
 {
     int length = 0;
     length = get_length(head);
     if(length > 1){
-        Empty_linklist(head);
+        reset_linklist(head);
     }
     free(head);
     head = NULL;

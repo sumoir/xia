@@ -18,10 +18,10 @@ int main(int argc, char **argv)
     int data = 0, New_data = 0;
 
     while (1) {
-        choose = Menu_show();
+        choose = show_menu();
         switch (choose) {
         case 1:
-            head = Create_linklist();
+            head = create_linklist();
             break;
         case 2:
             show_double_linklist(head);
@@ -38,10 +38,10 @@ int main(int argc, char **argv)
         case 5:
             printf("Please enter data from tail:");
             scanf("%d", &data);
-            Add_data_from_tail(head, data);
+            add_data_from_tail(head, data);
             break;
         case 6:
-            Add_data_from_position(head);
+            add_data_with_position(head);
             break;
         case 7:
             printf("Please enter position to find data:");
@@ -69,13 +69,13 @@ int main(int argc, char **argv)
         case 10:
             printf("Please enter position and New data to change(use spaces between two numbers):");
             scanf("%d %d",&position, &New_data);
-            Change_data_from_position(head,position,New_data);
+            update_data_from_position(head,position,New_data);
             break;
         case 11:
-            Empty_linklist(head);
+            reset_linklist(head);
             break;
         case 12:
-            Delete_linklist(head);
+            clear_linklist(head);
             break;
         case 0:
             exit(0);
