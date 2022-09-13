@@ -11,33 +11,33 @@
 typedef struct node {
     int age;
     struct node *next;
-} DoubleNode;
+} SingleNode;
 
-int Linklist_length(DoubleNode *head);
+int Linklist_length(SingleNode *head);
 
-DoubleNode* Create_linklist();
+SingleNode* Create_linklist();
 
-void Add_data_from_head(DoubleNode *head);
+void add_data_from_head(SingleNode *head);
 
 int Menu_show();
 
-void Linklist_show(DoubleNode *head);
+void Linklist_show(SingleNode *head);
 
-void Add_data_from_tail(DoubleNode *head);
+void Add_data_from_tail(SingleNode *head);
 
-void Add_data_from_position(DoubleNode *head);
+void Add_data_from_position(SingleNode *head);
 
-void Delete_data_from_position(DoubleNode *head, int position);
+void delete_data_by_position(SingleNode *head, int position);
 
-void Change_data_from_position(DoubleNode *head, int position, int data);
+void Change_data_from_position(SingleNode *head, int position, int data);
 
-void Change_data_from_data(DoubleNode *head, int data, int New_data);
+void Change_data_from_data(SingleNode *head, int data, int New_data);
 
-int find_data_with_position(DoubleNode *head);
+int find_data_with_position(SingleNode *head);
 
-int find_position_by_data(DoubleNode *head, int data);
+int find_position_by_data(SingleNode *head, int data);
 
-void Empty_linklist(DoubleNode *head);
+void Empty_linklist(SingleNode *head);
 
-void Delete_linklist(DoubleNode *head);
+void Delete_linklist(SingleNode *head);
 #endif /* LINKLIST_H_ */

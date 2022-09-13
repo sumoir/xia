@@ -10,7 +10,8 @@
 
 #include "double_link.h"
 
-void main()
+
+int main(int argc, char **argv)
 {
     DoubleNode *head;
     int choose = 0, position;
@@ -26,13 +27,13 @@ void main()
             show_double_linklist(head);
             break;
         case 3:
-            data = Length_show(head);
+            data = get_length(head);
             printf("\nlinklist length is %d\n", data);
             break;
         case 4:
             printf("Please enter data from head:");
             scanf("%d", &data);
-            Add_data_from_head(head, data);
+            add_data_from_head(head, data);
             break;
         case 5:
             printf("Please enter data from tail:");
@@ -63,7 +64,7 @@ void main()
         case 9:
             printf("Please enter position to delete:");
             scanf("%d", &position);
-            Delete_data_from_position(head, position);
+            delete_data_by_position(head, position);
             break;
         case 10:
             printf("Please enter position and New data to change(use spaces between two numbers):");

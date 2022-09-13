@@ -15,7 +15,7 @@ int main()
 {
     int data = 0, New_data = 0; 
     int choose = 0, position = 0;
-    DoubleNode *head;
+    SingleNode *head;
 
     while (1) {
         choose = Menu_show();
@@ -24,7 +24,7 @@ int main()
             head = Create_linklist();
             break;
         case 2:
-            Add_data_from_head(head);
+            add_data_from_head(head);
             break;
         case 3:
             Add_data_from_tail(head);
@@ -42,7 +42,7 @@ int main()
         case 7:
             printf("Please enter the position to be delete:");
             scanf("%d", &position);
-            Delete_data_from_position(head, position);
+            delete_data_by_position(head, position);
             break;
         case 8:
             printf("Please enter Position and Data to change(Use spaces between two number):");
