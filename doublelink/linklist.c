@@ -21,9 +21,9 @@ int Menu_show()
     printf("\t7.Find data from position\n");
     printf("\t8.Find position from data\n");
     printf("\t9.Delete data from position\n");
-    printf("\t10.\n");
-    printf("\t11.\n");
-    printf("\t12.\n");
+    printf("\t10.Change data from position\n");
+    printf("\t11.Empty linklist\n");
+    printf("\t12.Delete linklist\n");
 
     printf("\t0.Exit\n");
 
