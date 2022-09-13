@@ -8,11 +8,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "linklist.h"
+#include "double_link.h"
 
 void main()
 {
-    Linklist *head;
+    DoubleNode *head;
     int choose = 0, position;
     int data = 0, New_data = 0;
 
@@ -23,7 +23,7 @@ void main()
             head = Create_linklist();
             break;
         case 2:
-            Show_linklist(head);
+            show_double_linklist(head);
             break;
         case 3:
             data = Length_show(head);
@@ -45,7 +45,7 @@ void main()
         case 7:
             printf("Please enter position to find data:");
             scanf("%d", &position);
-            data = Find_data_from_position(head, position);
+            data = find_data_with_position(head, position);
             if (data == -1) {
                 break;
             }
@@ -54,7 +54,7 @@ void main()
         case 8:
             printf("Please enter data to find position:");
             scanf("%d", &data);
-            position = Find_position_from_data(head, data);
+            position = find_position_by_data(head, data);
             if (position == -1) {
                 break;
             }

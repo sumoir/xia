@@ -4,10 +4,11 @@
  *  Created on: 2022年9月8日
  *      Author: xia
  */
+#include "double_link.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "linklist.h"
 
 int Menu_show()
 {
@@ -34,27 +35,27 @@ int Menu_show()
     return choose;
 }
 
-Linklist* Create_linklist()
+DoubleNode* Create_linklist()
 {
-    Linklist *head = (Linklist*)malloc(sizeof(Linklist));
+    DoubleNode *head = (DoubleNode*)malloc(sizeof(DoubleNode));
     if (head == NULL) {
         printf("create fail (malloc error)");
         return NULL;
     }
     head->data = 0;
     head->next = NULL;
-    head->previous = NULL;
+    head->prev = NULL;
     printf("Create Success !!!\n");
 
     return head;
 }
 
-void Add_data_from_head(Linklist *head, int data)
+void Add_data_from_head(DoubleNode *head, int data)
 {
     int length = 0;
-    Linklist *list;
+    DoubleNode *list;
 
-    Linklist *p = (Linklist*)malloc(sizeof(Linklist));
+    DoubleNode *p = (DoubleNode*)malloc(sizeof(DoubleNode));
     if (p == NULL) {
         printf("Add failed(malloc error)");
         return;
@@ -64,27 +65,27 @@ void Add_data_from_head(Linklist *head, int data)
     if (length > 1) {
         p->data = data;
         p->next = head->next;
-        p->previous = head;
+        p->prev = head;
         list = head->next;
         head->next = p;
-        list->previous = p;
+        list->prev = p;
     }
     else {
         p->data = data;
         p->next = head->next;
-        p->previous = head;
+        p->prev = head;
         head->next = p;
     }
 
     return;
 }
 
-void Add_data_from_tail(Linklist *head, int data)
+void Add_data_from_tail(DoubleNode *head, int data)
 {
     int length = 0;
-    Linklist *list = head;
+    DoubleNode *list = head;
 
-    Linklist *p = (Linklist*)malloc(sizeof(Linklist));
+    DoubleNode *p = (DoubleNode*)malloc(sizeof(DoubleNode));
     if (p == NULL) {
         printf("Add failed(malloc error)");
         return;
@@ -95,24 +96,24 @@ void Add_data_from_tail(Linklist *head, int data)
     }
     p->data = data;
     p->next = list->next;
-    p->previous = list;
+    p->prev = list;
     list->next = p;
 
     return;
 }
 
-void Add_data_from_position(Linklist *head)
+void Add_data_from_position(DoubleNode *head)
 {
     int length = 0, pos = 1;
     int data = 0, position = 0;
-    Linklist *right;
-    Linklist *left = head;
+    DoubleNode *right;
+    DoubleNode *left = head;
 
     printf("Please enter position and data to add(use spaces between two numbers):");
     scanf("%d %d", &position, &data);
 
     length = Length_show(head);
-    Linklist *p = (Linklist*)malloc(sizeof(Linklist));
+    DoubleNode *p = (DoubleNode*)malloc(sizeof(DoubleNode));
 
     if (position <= 0 || position > length) {
         printf("Data access out of bounds");
@@ -141,8 +142,8 @@ void Add_data_from_position(Linklist *head)
         p->data = data;
 
         p->next = right;
-        p->previous = left;
-        right->previous = p;
+        p->prev = left;
+        right->prev = p;
         left->next = p;
 
         return;
@@ -151,10 +152,10 @@ void Add_data_from_position(Linklist *head)
     return;
 }
 
-int Find_position_from_data(Linklist *head, int data)
+int find_position_by_data(DoubleNode *head, int data)
 {
     int position = 1;
-    Linklist *p = head;
+    DoubleNode *p = head;
     while (p->next != NULL) {
         if (p->data == data) {
             return position - 1;
@@ -172,13 +173,12 @@ int Find_position_from_data(Linklist *head, int data)
     return -1;
 }
 
-void Delete_data_from_position(Linklist *head, int position)
+void Delete_data_from_position(DoubleNode *head, int position)
 {
-
     int length = 0, pos = 0;
-    Linklist *p = head;
-    Linklist *left;
-    Linklist *right;
+    DoubleNode *e = head;
+    DoubleNode *left;
+    DoubleNode *right;
 
     length = Length_show(head);
 
@@ -188,33 +188,32 @@ void Delete_data_from_position(Linklist *head, int position)
     }
 
     while (pos < position) {
-        p = p->next;
+        e = e->next;
         pos++;
     }
 
     if (position == length - 1) {
-        left = p->previous;
-        left->next = p->next;
-        free(p);
-        p = NULL;
+        left = e->prev;
+        left->next = e->next;
+        free(e);
+        e = NULL;
         return;
     }
 
-    right = p->next;
-    left = p->previous;
+    right = e->next;
+    left = e->prev;
 
     left->next = right;
-    right->previous = left;
+    right->prev = left;
 
-    free(p);
-    p = NULL;
-
+    free(e);
+    e = NULL;
 }
 
-void Change_data_from_position(Linklist *head, int position, int New_data)
+void Change_data_from_position(DoubleNode *head, int position, int New_data)
 {
     int length = 0, pos = 0;
-    Linklist *p = head;
+    DoubleNode *p = head;
 
     length = Length_show(head);
 
@@ -233,9 +232,9 @@ void Change_data_from_position(Linklist *head, int position, int New_data)
 
 }
 
-void Show_linklist(Linklist *head)
+void show_double_linklist(DoubleNode *head)
 {
-    Linklist *p = head;
+    DoubleNode *p = head;
     printf("\nPositive:");
     while (p->next != NULL) {
         p = p->next;
@@ -244,20 +243,20 @@ void Show_linklist(Linklist *head)
 
     printf("\n");
     printf("Reverse:");
-    while (p->previous != NULL) {
+    while (p->prev != NULL) {
         printf("%d ", p->data);
-        p = p->previous;
-        if (p->previous == NULL) {
+        p = p->prev;
+        if (p->prev == NULL) {
             break;
         }
     }
     printf("\n");
 }
 
-int Length_show(Linklist *head)
+int Length_show(DoubleNode *head)
 {
     int length = 1;
-    Linklist *p = head;
+    DoubleNode *p = head;
     while (p->next != NULL) {
         length++;
         p = p->next;
@@ -266,9 +265,9 @@ int Length_show(Linklist *head)
     return length;
 }
 
-int Find_data_from_position(Linklist *head, int position)
+int find_data_with_position(DoubleNode *head, int position)
 {
-    Linklist *p = head;
+    DoubleNode *p = head;
     int length = 0;
     int i = 0;
 
@@ -286,7 +285,7 @@ int Find_data_from_position(Linklist *head, int position)
     return p->data;
 }
 
-void Empty_linklist(Linklist *head)
+void Empty_linklist(DoubleNode *head)
 {
 
     while (head->next != NULL) {
@@ -295,7 +294,7 @@ void Empty_linklist(Linklist *head)
 
 }
 
-void Delete_linklist(Linklist *head)
+void Delete_linklist(DoubleNode *head)
 {
     int length = 0;
     length = Length_show(head);

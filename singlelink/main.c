@@ -9,13 +9,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "linklist.h"
+#include "single_link.h"
 
 int main()
 {
     int data = 0, New_data = 0; 
     int choose = 0, position = 0;
-    Linklist *head;
+    DoubleNode *head;
 
     while (1) {
         choose = Menu_show();
@@ -50,12 +50,12 @@ int main()
             Change_data_from_position(head, position, data);
             break;
         case 9:
-            Find_data_from_position(head);
+            find_data_with_position(head);
             break;
         case 10:
             printf("Please enter data to find:");
             scanf("%d", &data);
-            Find_position_from_data(head, data);
+            find_position_by_data(head, data);
             break;
         case 11:
             printf("Please enter Data and New data to change(Use spaces between two number):");
